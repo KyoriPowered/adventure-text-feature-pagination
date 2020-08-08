@@ -1,0 +1,1 @@
+# adventure-text-feature-pagination [![License](https://img.shields.io/github/license/KyoriPowered/adventure-text-feature-pagination.svg)](https://github.com/KyoriPowered/adventure-text-feature-pagination/blob/master/license.txt)
