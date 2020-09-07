@@ -45,3 +45,69 @@ jar {
     'Automatic-Module-Name': 'net.kyori.adventure.text.feature.pagination'
   )
 }
+
+inventSonatypeRepository.enabled = System.getenv('GITHUB_ACTIONS') == null || project.version.endsWith('-SNAPSHOT')
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+
+      artifact javadocJar
+      artifact sourcesJar
+
+      pom {
+        name = project.name
+        url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination'
+        description = project.description
+
+        developers {
+          developer {
+            id = 'kashike'
+            timezone = 'America/Vancouver'
+          }
+
+          developer {
+            id = 'lucko'
+            name = 'Luck'
+            url = 'https://lucko.me'
+            email = 'git@lucko.me'
+          }
+
+          developer {
+            id = 'zml'
+            name = 'zml'
+            timezone = 'America/Vancouver'
+          }
+
+          developer {
+            id = 'Electroid'
+          }
+        }
+
+        issueManagement {
+          system = 'GitHub Issues'
+          url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination/issues'
+        }
+
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'https://opensource.org/licenses/MIT'
+          }
+        }
+
+        scm {
+          connection = 'scm:git@github.com:KyoriPowered/adventure-text-feature-pagination.git'
+          developerConnection = 'scm:git@github.com:KyoriPowered/adventure-text-feature-pagination.git'
+          url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination/'
+        }
+      }
+    }
+  }
+}
+
+signing {
+  required { project.hasProperty('signing.keyId') && gradle.taskGraph.hasTask(':publish') && !project.version.endsWith('-SNAPSHOT') }
+  sign publishing.publications.maven
+}
