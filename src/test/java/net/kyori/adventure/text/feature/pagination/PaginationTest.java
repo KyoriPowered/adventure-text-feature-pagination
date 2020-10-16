@@ -29,7 +29,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.Test;
@@ -38,8 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PaginationTest {
-  private static final Component TITLE = TextComponent.of("The Things");
-  private static final Component EMPTY = TextComponent.of("E M P T Y");
+  private static final Component TITLE = Component.text("The Things");
+  private static final Component EMPTY = Component.text("E M P T Y");
   private static final Pagination<String> PAGINATION = Pagination.builder()
     .renderer(new Pagination.Renderer() {
       @Override
@@ -47,7 +46,7 @@ class PaginationTest {
         return EMPTY;
       }
     })
-    .build(TITLE, (value, index) -> Collections.singleton(value == null ? TextComponent.of("<null>") : TextComponent.of(value, NamedTextColor.GOLD)), page -> "/page " + page);
+    .build(TITLE, (value, index) -> Collections.singleton(value == null ? Component.text("<null>") : Component.text(value, NamedTextColor.GOLD)), page -> "/page " + page);
   private static final List<String> CONTENT_0 = Collections.emptyList();
   private static final List<String> CONTENT_2 = content(2);
   private static final List<String> CONTENT_14 = content(14);
