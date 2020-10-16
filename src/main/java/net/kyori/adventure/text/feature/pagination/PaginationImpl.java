@@ -97,7 +97,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
     final Component header = this.renderer.renderHeader(this.title, page, pages);
     final Component dashes = this.line(header);
 
-    return TextComponent.builder()
+    return Component.text()
       .append(dashes)
       .append(header)
       .append(dashes)
@@ -112,7 +112,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
     final Component buttons = this.renderFooterButtons(page, pages);
     final Component dashes = this.line(buttons);
 
-    return TextComponent.builder()
+    return Component.text()
       .append(dashes)
       .append(buttons)
       .append(dashes)
@@ -123,7 +123,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
     final boolean hasPreviousPage = page > 1 && pages > 1;
     final boolean hasNextPage = (page < pages && page == 1) || ((hasPreviousPage && page > 1) && page != pages);
 
-    final TextComponent.Builder buttons = TextComponent.builder();
+    final TextComponent.Builder buttons = Component.text();
     if(hasPreviousPage) {
       buttons.append(this.renderer.renderPreviousPageButton(this.previousPageButtonCharacter, this.previousPageButtonStyle, ClickEvent.runCommand(this.pageCommand.pageCommand(page - 1))));
 
@@ -144,7 +144,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
   }
 
   private @NonNull Component line(final int characters) {
-    return TextComponent.of(repeat(String.valueOf(this.lineCharacter), characters), this.lineStyle);
+    return Component.text(repeat(String.valueOf(this.lineCharacter), characters), this.lineStyle);
   }
 
   static int length(final @NonNull Component component) {

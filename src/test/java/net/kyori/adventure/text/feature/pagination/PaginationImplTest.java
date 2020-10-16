@@ -23,7 +23,7 @@
  */
 package net.kyori.adventure.text.feature.pagination;
 
-import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.Component;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,12 +35,12 @@ class PaginationImplTest {
   @Test
   @SuppressWarnings("PointlessArithmeticExpression")
   void testLength() {
-    Assertions.assertEquals(0, PaginationImpl.length(TextComponent.empty()));
+    Assertions.assertEquals(0, PaginationImpl.length(Component.empty()));
     assertEquals(0 + 3 + 1 + 3, PaginationImpl.length(
-      TextComponent.builder()
-        .append(TextComponent.of("abc"))
-        .append(TextComponent.space())
-        .append(TextComponent.of("def"))
+      Component.text()
+        .append(Component.text("abc"))
+        .append(Component.space())
+        .append(Component.text("def"))
       .build()
     ));
   }
