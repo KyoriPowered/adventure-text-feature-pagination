@@ -1,34 +1,25 @@
+import net.kyori.indra.Indra
+
+buildscript {
+  ext {
+    indraVersion = "1.2.0"
+  }
+}
+
 plugins {
-  id 'java-library'
-  id 'maven-publish'
-  id 'signing'
-  id 'net.kyori.invent' version '1.0.4'
-  id 'net.kyori.invent-javadoc-jar' version '1.0.4'
-  id 'net.kyori.invent-sonatype-repository' version '1.0.4'
-  id 'net.kyori.invent-sources-jar' version '1.0.4'
-  id 'net.minecrell.licenser' version '0.4.1'
+  id 'net.kyori.indra' version "$indraVersion"
+  id 'net.kyori.indra.publishing.sonatype' version "$indraVersion"
+  id 'net.kyori.indra.license-header' version "$indraVersion"
 }
 
 group 'net.kyori'
 version '4.0.0-SNAPSHOT'
 description 'A pagination feature for Adventure.'
 
-tasks.withType(JavaCompile) {
-  options.compilerArgs += ['-Xlint:all']
-}
-
-license {
-  header rootProject.file('header.txt')
-  include '**/*.java'
-  newLine false
-}
-
 repositories {
   mavenLocal()
   mavenCentral()
-  maven {
-    url 'https://oss.sonatype.org/content/groups/public/'
-  }
+  sonatypeSnapshots()
 }
 
 dependencies {
@@ -46,68 +37,43 @@ jar {
   )
 }
 
-inventSonatypeRepository.enabled = System.getenv('GITHUB_ACTIONS') == null || project.version.endsWith('-SNAPSHOT')
+indra {
+  javaVersions {
+    testWith(8, 11, 15)
+  }
 
-publishing {
-  publications {
-    maven(MavenPublication) {
-      from components.java
+  github("KyoriPowered", "adventure-text-feature-pagination")
+  mitLicense()
 
-      artifact javadocJar
-      artifact sourcesJar
-
-      pom {
-        name = project.name
-        url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination'
-        description = project.description
-
-        developers {
-          developer {
-            id = 'kashike'
-            timezone = 'America/Vancouver'
-          }
-
-          developer {
-            id = 'lucko'
-            name = 'Luck'
-            url = 'https://lucko.me'
-            email = 'git@lucko.me'
-          }
-
-          developer {
-            id = 'zml'
-            name = 'zml'
-            timezone = 'America/Vancouver'
-          }
-
-          developer {
-            id = 'Electroid'
-          }
+  configurePublications {
+    pom {
+      developers {
+        developer {
+          id = 'kashike'
+          timezone = 'America/Vancouver'
         }
 
-        issueManagement {
-          system = 'GitHub Issues'
-          url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination/issues'
+        developer {
+          id = 'lucko'
+          name = 'Luck'
+          url = 'https://lucko.me'
+          email = 'git@lucko.me'
         }
 
-        licenses {
-          license {
-            name = 'MIT License'
-            url = 'https://opensource.org/licenses/MIT'
-          }
+        developer {
+          id = 'zml'
+          name = 'zml'
+          timezone = 'America/Vancouver'
         }
 
-        scm {
-          connection = 'scm:git@github.com:KyoriPowered/adventure-text-feature-pagination.git'
-          developerConnection = 'scm:git@github.com:KyoriPowered/adventure-text-feature-pagination.git'
-          url = 'https://github.com/KyoriPowered/adventure-text-feature-pagination/'
+        developer {
+          id = 'Electroid'
         }
       }
     }
   }
 }
 
-signing {
-  required { project.hasProperty('signing.keyId') && gradle.taskGraph.hasTask(':publish') && !project.version.endsWith('-SNAPSHOT') }
-  sign publishing.publications.maven
+tasks.withType(Sign) {
+  onlyIf { project.hasProperty('signing.keyId') && Indra.isRelease(project) }
 }
