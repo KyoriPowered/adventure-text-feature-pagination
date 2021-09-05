@@ -26,8 +26,8 @@ package net.kyori.adventure.text.feature.pagination;
 import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
-import org.checkerframework.checker.index.qual.NonNegative;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
 
 final class PaginationBuilder implements Pagination.Builder {
   private int width = Pagination.WIDTH;
@@ -44,34 +44,34 @@ final class PaginationBuilder implements Pagination.Builder {
   private Style nextPageButtonStyle = Pagination.NEXT_PAGE_BUTTON_STYLE;
 
   @Override
-  public Pagination.@NonNull Builder width(final int width) {
+  public Pagination.@NotNull Builder width(final int width) {
     this.width = width;
     return this;
   }
 
   @Override
-  public Pagination.@NonNull Builder resultsPerPage(final @NonNegative int resultsPerPage) {
+  public Pagination.@NotNull Builder resultsPerPage(final @Range(from = 0, to = Integer.MAX_VALUE) int resultsPerPage) {
     this.resultsPerPage = resultsPerPage;
     return this;
   }
 
   @Override
-  public Pagination.@NonNull Builder renderer(final Pagination.@NonNull Renderer renderer) {
+  public Pagination.@NotNull Builder renderer(final Pagination.@NotNull Renderer renderer) {
     this.renderer = renderer;
     return this;
   }
 
   @Override
-  public Pagination.@NonNull Builder line(final @NonNull Consumer<CharacterAndStyle> line) {
+  public Pagination.@NotNull Builder line(final @NotNull Consumer<CharacterAndStyle> line) {
     line.accept(new CharacterAndStyle() {
       @Override
-      public @NonNull CharacterAndStyle character(final char character) {
+      public @NotNull CharacterAndStyle character(final char character) {
         PaginationBuilder.this.lineCharacter = character;
         return this;
       }
 
       @Override
-      public @NonNull CharacterAndStyle style(final @NonNull Style style) {
+      public @NotNull CharacterAndStyle style(final @NotNull Style style) {
         PaginationBuilder.this.lineStyle = style;
         return this;
       }
@@ -80,16 +80,16 @@ final class PaginationBuilder implements Pagination.Builder {
   }
 
   @Override
-  public Pagination.@NonNull Builder previousButton(final @NonNull Consumer<CharacterAndStyle> previousButton) {
+  public Pagination.@NotNull Builder previousButton(final @NotNull Consumer<CharacterAndStyle> previousButton) {
     previousButton.accept(new CharacterAndStyle() {
       @Override
-      public @NonNull CharacterAndStyle character(final char character) {
+      public @NotNull CharacterAndStyle character(final char character) {
         PaginationBuilder.this.previousPageButtonCharacter = character;
         return this;
       }
 
       @Override
-      public @NonNull CharacterAndStyle style(final @NonNull Style style) {
+      public @NotNull CharacterAndStyle style(final @NotNull Style style) {
         PaginationBuilder.this.previousPageButtonStyle = style;
         return this;
       }
@@ -98,16 +98,16 @@ final class PaginationBuilder implements Pagination.Builder {
   }
 
   @Override
-  public Pagination.@NonNull Builder nextButton(final @NonNull Consumer<CharacterAndStyle> nextButton) {
+  public Pagination.@NotNull Builder nextButton(final @NotNull Consumer<CharacterAndStyle> nextButton) {
     nextButton.accept(new CharacterAndStyle() {
       @Override
-      public @NonNull CharacterAndStyle character(final char character) {
+      public @NotNull CharacterAndStyle character(final char character) {
         PaginationBuilder.this.nextPageButtonCharacter = character;
         return this;
       }
 
       @Override
-      public @NonNull CharacterAndStyle style(final @NonNull Style style) {
+      public @NotNull CharacterAndStyle style(final @NotNull Style style) {
         PaginationBuilder.this.nextPageButtonStyle = style;
         return this;
       }
@@ -116,7 +116,7 @@ final class PaginationBuilder implements Pagination.Builder {
   }
 
   @Override
-  public <T> @NonNull Pagination<T> build(final @NonNull Component title, final Pagination.Renderer.@NonNull RowRenderer<T> rowRenderer, final Pagination.@NonNull PageCommandFunction pageCommand) {
+  public <T> @NotNull Pagination<T> build(final @NotNull Component title, final Pagination.Renderer.@NotNull RowRenderer<T> rowRenderer, final Pagination.@NotNull PageCommandFunction pageCommand) {
     return new PaginationImpl<>(
       this.width,
       this.resultsPerPage,

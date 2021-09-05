@@ -28,11 +28,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.RandomAccess;
 import java.util.function.ObjIntConsumer;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 interface Paginator {
   @SuppressWarnings("unchecked")
-  static <T> void forEachPageEntry(final @NonNull Collection<? extends T> content, final int pageSize, final int page, final @NonNull ObjIntConsumer<? super T> consumer) {
+  static <T> void forEachPageEntry(final @NotNull Collection<? extends T> content, final int pageSize, final int page, final @NotNull ObjIntConsumer<? super T> consumer) {
     final int size = content.size();
     final int start = pageSize * (page - 1);
     final int end = pageSize * page;

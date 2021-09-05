@@ -35,7 +35,7 @@ import net.kyori.adventure.text.format.Style;
 import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
 import net.kyori.examination.string.StringExaminer;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 final class PaginationImpl<T> implements Examinable, Pagination<T> {
   private static final int LINE_CHARACTER_LENGTH = 1;
@@ -57,7 +57,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
   private final Renderer.RowRenderer<T> rowRenderer;
   private final PageCommandFunction pageCommand;
 
-  PaginationImpl(final int width, final int resultsPerPage, final @NonNull Renderer renderer, final char lineCharacter, final @NonNull Style lineStyle, final char previousPageButtonCharacter, final @NonNull Style previousPageButtonStyle, final char nextPageButtonCharacter, final @NonNull Style nextPageButtonStyle, final @NonNull Component title, final Renderer.@NonNull RowRenderer<T> rowRenderer, final @NonNull PageCommandFunction pageCommand) {
+  PaginationImpl(final int width, final int resultsPerPage, final @NotNull Renderer renderer, final char lineCharacter, final @NotNull Style lineStyle, final char previousPageButtonCharacter, final @NotNull Style previousPageButtonStyle, final char nextPageButtonCharacter, final @NotNull Style nextPageButtonStyle, final @NotNull Component title, final Renderer.@NotNull RowRenderer<T> rowRenderer, final @NotNull PageCommandFunction pageCommand) {
     this.width = width;
     this.resultsPerPage = resultsPerPage;
     this.renderer = renderer;
@@ -73,7 +73,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
   }
 
   @Override
-  public @NonNull List<Component> render(final @NonNull Collection<? extends T> content, final int page) {
+  public @NotNull List<Component> render(final @NotNull Collection<? extends T> content, final int page) {
     if(content.isEmpty()) {
       return Collections.singletonList(this.renderer.renderEmpty());
     }
@@ -139,15 +139,15 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
     return buttons.build();
   }
 
-  private @NonNull Component line(final @NonNull Component component) {
+  private @NotNull Component line(final @NotNull Component component) {
     return this.line((this.width - length(component)) / (LINE_CHARACTER_LENGTH * 2));
   }
 
-  private @NonNull Component line(final int characters) {
+  private @NotNull Component line(final int characters) {
     return Component.text(repeat(String.valueOf(this.lineCharacter), characters), this.lineStyle);
   }
 
-  static int length(final @NonNull Component component) {
+  static int length(final @NotNull Component component) {
     int length = 0;
     if(component instanceof TextComponent) {
       length += ((TextComponent) component).content().length();
@@ -158,7 +158,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
     return length;
   }
 
-  static @NonNull String repeat(final @NonNull String character, final int count) {
+  static @NotNull String repeat(final @NotNull String character, final int count) {
     return String.join("", Collections.nCopies(count, character));
   }
 
@@ -175,7 +175,7 @@ final class PaginationImpl<T> implements Examinable, Pagination<T> {
   }
 
   @Override
-  public @NonNull Stream<? extends ExaminableProperty> examinableProperties() {
+  public @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
     return Stream.of(
       ExaminableProperty.of("width", this.width),
       ExaminableProperty.of("resultsPerPage", this.resultsPerPage),

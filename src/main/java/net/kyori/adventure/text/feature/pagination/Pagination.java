@@ -31,9 +31,9 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
-import org.checkerframework.checker.index.qual.NonNegative;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 /**
  * Pagination.
@@ -95,7 +95,7 @@ public interface Pagination<T> {
    *
    * @return a builder
    */
-  static @NonNull Builder builder() {
+  static @NotNull Builder builder() {
     return new PaginationBuilder();
   }
 
@@ -106,7 +106,7 @@ public interface Pagination<T> {
    * @param page the page number
    * @return the rendered results
    */
-  @NonNull List<Component> render(final @NonNull Collection<? extends T> content, final int page);
+  @NotNull List<Component> render(final @NotNull Collection<? extends T> content, final int page);
 
   /**
    * A pagination renderer.
@@ -125,7 +125,7 @@ public interface Pagination<T> {
      *
      * @return the rendered component
      */
-    default @NonNull Component renderEmpty() {
+    default @NotNull Component renderEmpty() {
       return Component.text("No results match.", NamedTextColor.GRAY);
     }
 
@@ -138,7 +138,7 @@ public interface Pagination<T> {
      * @param pages the total number of pages
      * @return the rendered component
      */
-    default @NonNull Component renderUnknownPage(final int page, final int pages) {
+    default @NotNull Component renderUnknownPage(final int page, final int pages) {
       return Component.text("Unknown page selected. " + pages + " total pages.", NamedTextColor.GRAY);
     }
 
@@ -150,7 +150,7 @@ public interface Pagination<T> {
      * @param pages the total number of pages
      * @return the rendered component
      */
-    default @NonNull Component renderHeader(final @NonNull Component title, final int page, final int pages) {
+    default @NotNull Component renderHeader(final @NotNull Component title, final int page, final int pages) {
       return Component.text()
         .append(Component.space())
         .append(title)
@@ -172,7 +172,7 @@ public interface Pagination<T> {
      * @param clickEvent the click event for the button
      * @return the rendered component
      */
-    default @NonNull Component renderPreviousPageButton(final char character, final @NonNull Style style, final @NonNull ClickEvent clickEvent) {
+    default @NotNull Component renderPreviousPageButton(final char character, final @NotNull Style style, final @NotNull ClickEvent clickEvent) {
       return Component.text()
         .append(Component.space())
         .append(GRAY_LEFT_SQUARE_BRACKET)
@@ -190,7 +190,7 @@ public interface Pagination<T> {
      * @param clickEvent the click event for the button
      * @return the rendered component
      */
-    default @NonNull Component renderNextPageButton(final char character, final @NonNull Style style, final @NonNull ClickEvent clickEvent) {
+    default @NotNull Component renderNextPageButton(final char character, final @NotNull Style style, final @NotNull ClickEvent clickEvent) {
       return Component.text()
         .append(Component.space())
         .append(GRAY_LEFT_SQUARE_BRACKET)
@@ -214,7 +214,7 @@ public interface Pagination<T> {
        * @param index the index
        * @return the rendered row
        */
-      @NonNull Collection<Component> renderRow(final @Nullable T value, final int index);
+      @NotNull Collection<Component> renderRow(final @Nullable T value, final int index);
     }
   }
 
@@ -229,7 +229,7 @@ public interface Pagination<T> {
      * @param page the page
      * @return the command
      */
-    @NonNull String pageCommand(final int page);
+    @NotNull String pageCommand(final int page);
   }
 
   /**
@@ -242,7 +242,7 @@ public interface Pagination<T> {
      * @param width the width
      * @return this builder
      */
-    @NonNull Builder width(final int width);
+    @NotNull Builder width(final int width);
 
     /**
      * Sets the number of results per page.
@@ -250,7 +250,7 @@ public interface Pagination<T> {
      * @param resultsPerPage the number of results per page
      * @return this builder
      */
-    @NonNull Builder resultsPerPage(final @NonNegative int resultsPerPage);
+    @NotNull Builder resultsPerPage(final @Range(from = 0, to = Integer.MAX_VALUE) int resultsPerPage);
 
     /**
      * Sets the renderer.
@@ -258,7 +258,7 @@ public interface Pagination<T> {
      * @param renderer the renderer
      * @return this builder
      */
-    @NonNull Builder renderer(final @NonNull Renderer renderer);
+    @NotNull Builder renderer(final @NotNull Renderer renderer);
 
     /**
      * Sets the line character and style.
@@ -266,7 +266,7 @@ public interface Pagination<T> {
      * @param line the line consumer
      * @return this builder
      */
-    @NonNull Builder line(final @NonNull Consumer<CharacterAndStyle> line);
+    @NotNull Builder line(final @NotNull Consumer<CharacterAndStyle> line);
 
     /**
      * Sets the previous button.
@@ -274,7 +274,7 @@ public interface Pagination<T> {
      * @param previousButton the button consumer
      * @return this builder
      */
-    @NonNull Builder previousButton(final @NonNull Consumer<CharacterAndStyle> previousButton);
+    @NotNull Builder previousButton(final @NotNull Consumer<CharacterAndStyle> previousButton);
 
     /**
      * Sets the next button.
@@ -282,7 +282,7 @@ public interface Pagination<T> {
      * @param nextButton the button consumer
      * @return this builder
      */
-    @NonNull Builder nextButton(final @NonNull Consumer<CharacterAndStyle> nextButton);
+    @NotNull Builder nextButton(final @NotNull Consumer<CharacterAndStyle> nextButton);
 
     /**
      * Builds.
@@ -295,7 +295,7 @@ public interface Pagination<T> {
      * @throws IllegalStateException if the title has not been set
      * @throws IllegalStateException if the row renderer has not been set
      */
-    <T> @NonNull Pagination<T> build(final @NonNull Component title, final Renderer.@NonNull RowRenderer<T> rowRenderer, final @NonNull PageCommandFunction pageCommand);
+    <T> @NotNull Pagination<T> build(final @NotNull Component title, final Renderer.@NotNull RowRenderer<T> rowRenderer, final @NotNull PageCommandFunction pageCommand);
 
     /**
      * A builder for a character and style pair.
@@ -307,7 +307,7 @@ public interface Pagination<T> {
        * @param character the character
        * @return this builder
        */
-      @NonNull CharacterAndStyle character(final char character);
+      @NotNull CharacterAndStyle character(final char character);
 
       /**
        * Sets the style.
@@ -315,7 +315,7 @@ public interface Pagination<T> {
        * @param style the style
        * @return this builder
        */
-      @NonNull CharacterAndStyle style(final @NonNull Style style);
+      @NotNull CharacterAndStyle style(final @NotNull Style style);
     }
   }
 }
