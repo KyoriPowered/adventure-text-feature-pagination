@@ -20,6 +20,10 @@ repositories {
   sonatypeSnapshots()
 }
 
+indraSonatype {
+  useAlternateSonatypeOSSHost("s01")
+}
+
 dependencies {
   api 'net.kyori:adventure-api:4.10.0'
   testImplementation 'com.google.guava:guava-testlib:31.1-jre'
