@@ -7,7 +7,7 @@ buildscript {
 plugins {
   id 'net.kyori.indra' version "$indraVersion"
   id 'net.kyori.indra.publishing.sonatype' version "$indraVersion"
-  id 'net.kyori.indra.license-header' version "$indraVersion"
+  id 'net.kyori.indra.licenser.spotless' version "$indraVersion"
 }
 
 group 'net.kyori'
@@ -40,7 +40,7 @@ jar {
 
 indra {
   javaVersions {
-    testWith(8, 11, 16)
+    testWith(8, 11, 17)
   }
 
   github("KyoriPowered", "adventure-text-feature-pagination") {
