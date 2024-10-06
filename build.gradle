@@ -8,7 +8,7 @@ plugins {
   id 'net.kyori.indra' version "$indraVersion"
   id 'net.kyori.indra.publishing.sonatype' version "$indraVersion"
   id 'net.kyori.indra.licenser.spotless' version "$indraVersion"
-  id 'io.github.gradle-nexus.publish-plugin' version "2.0.0-rc-2"
+  id 'io.github.gradle-nexus.publish-plugin' version "2.0.0"
 }
 
 group 'net.kyori'
